@@ -9,7 +9,19 @@
 
 set -euo pipefail
 
-REMINDERS=/opt/homebrew/bin/reminders
+if [ -x /usr/local/bin/reminders ]; then
+    REMINDERS=/usr/local/bin/reminders        # Intel macOS / Homebrew on /usr/local
+elif [ -x /opt/homebrew/bin/reminders ]; then
+    REMINDERS=/opt/homebrew/bin/reminders     # Apple Silicon / Homebrew on /opt/homebrew
+else
+    REMINDERS=$(command -v reminders 2>/dev/null || echo "")
+fi
+
+if [ -z "$REMINDERS" ]; then
+    echo "$(date '+%Y-%m-%d %H:%M:%S') ERROR: reminders CLI not found" >&2
+    exit 1
+fi
+
 LIST="Foodlog"
 LOG_PREFIX="[$(date '+%Y-%m-%d %H:%M:%S')]"
 

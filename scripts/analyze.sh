@@ -152,9 +152,22 @@ run_watch_loop() {
   acquire_watch_lock
   recover_orphans
   debug "[watch] === WATCHER START === PID=$$ interval=${WATCH_INTERVAL}s"
+  local last_reset_day=""
   while true; do
     if process_next_ticket; then
       continue   # Drain queue without sleeping between tickets
+    fi
+    # Daily Reminders.app cleanup: complete all incomplete entries once per
+    # day, after 5 AM. Idempotent — safe if the watcher restarts mid-day.
+    local today
+    today=$(date +%Y-%m-%d)
+    if [ "$today" != "$last_reset_day" ] && [ "$(date +%H)" -ge 5 ]; then
+      debug "[watch] running reset-reminders for $today"
+      if "$FOOD_LOG_DIR/scripts/reset-reminders.sh" >> "$DEBUG_LOG" 2>&1; then
+        last_reset_day="$today"
+      else
+        debug "[watch] reset-reminders failed (will retry next loop)"
+      fi
     fi
     sleep "$WATCH_INTERVAL"
   done
