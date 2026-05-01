@@ -1,0 +1,29 @@
+# Secrets
+.env
+
+# Logs
+data/*.log
+
+# Transient queue state (machine-specific)
+data/queue/
+data/pending/
+data/test_results/
+
+# Temp files
+data/tmp_*
+.tmp_photo_*
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# OS / editor
+.DS_Store
+.claude/
+
+# Stray images at repo root
+/*.jpg
+/*.JPG
+/*.jpeg
+/*.HEIC

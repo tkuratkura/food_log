@@ -1,0 +1,14 @@
+{
+  "preset_name": "平日昼間",
+  "description": "Weekday daytime meals (fixed routine, excludes breakfast and dinner)",
+  "meals": [
+    { "template": "お酢ドリンク", "time": "07:30" },
+    { "template": "スーパー大麦", "time": "07:30" },
+    { "template": "大豆の間食", "time": "09:30" },
+    { "template": "お昼ご飯", "time": "11:30" },
+    { "template": "ナッツ", "time": "11:30" },
+    { "template": "スーパー大麦", "time": "11:30" },
+    { "template": "ハイカカオチョコレート", "time": "15:30" },
+    { "template": "スーパー大麦", "time": "15:30" }
+  ]
+}
